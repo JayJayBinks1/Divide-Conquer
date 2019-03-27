@@ -113,9 +113,9 @@ def merge(left_nodes, right_nodes):
     # If one list was larger than the other
     # add the remaining elements in the larger list
     # to the merged list
-    if left_pointer < right_pointer:
+    if left_pointer < left_length:
         merged_list.extend(left_nodes[left_pointer:])
-    else:
+    elif right_pointer < right_length:
         merged_list.extend(right_nodes[right_pointer:])
 
     return merged_list
@@ -205,7 +205,7 @@ def calculate_compatibility(persons, beds):
 
     # If we ran out of persons, set the compatibility of remaining
     # beds to the one before it
-    if beds_pointer < persons_pointer:
+    if beds_pointer < len(beds):
         for bed in beds[beds_pointer:]:
             bed.set_compatibility(num_compatible)
 

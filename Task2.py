@@ -105,17 +105,15 @@ def read_file(filename):
         beds_set2 = list(map((lambda x: (Bed(x.split()[0], float(x.split()[1]), float(x.split()[2]), int(x.split()[3])
                                              ))), beds_set2))
 
-
     return persons_set1, beds_set1, persons_set2, beds_set2
 
 
-def merge(left_persons, left_beds, right_persons, right_beds):
+def merge(left_persons, left_beds, right_beds):
     """
     Merges the two sets together by calculating the compatibility of each bed in right_beds with each person in
     left_persons.
     :param left_persons: Subset of persons left of the vertical line
     :param left_beds: Subset of beds left of the vertical line
-    :param right_persons: Subset of persons right of the vertical line
     :param right_beds: Subset of beds right of the vertical line
     :return: The merged beds with updated compatibility
     """
@@ -149,13 +147,12 @@ def merge(left_persons, left_beds, right_persons, right_beds):
 
     # If we ran out of left persons, set the compatibility of remaining
     # right beds to the one before it
-    if beds_pointer < persons_pointer:
+    if beds_pointer < beds_length:
         for bed in right_beds[beds_pointer:]:
             bed.set_compatibility(bed.get_compatibility() + num_compatible)
 
     # Merge two sets and return
-    left_beds.extend(right_beds)
-    return left_beds
+    return left_beds + right_beds
 
 
 def print_results(beds):
@@ -166,7 +163,7 @@ def print_results(beds):
 def __main__():
     filename = sys.argv[1]
     nodes = read_file(filename)
-    beds = merge(nodes[0], nodes[1], nodes[2], nodes[3])
+    beds = merge(nodes[0], nodes[1], nodes[3])
     print_results(beds)
 
 
